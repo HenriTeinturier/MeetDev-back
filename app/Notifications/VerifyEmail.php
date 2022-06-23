@@ -69,7 +69,8 @@ class VerifyEmail extends Notification
     {
         $token = JWTAuth::fromUser($notifiable);
        // return route('email.verify', [$token], false);
-       return 'http://localhost:3000/email/verify/'.$token;
+       // return 'http://localhost:3000/email/verify/'.$token;
+       return 'http://www.meetdev.henriteinturier.fr/email/verify/'.$token;
     }
 
     /**
