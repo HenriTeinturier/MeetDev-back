@@ -36,14 +36,19 @@ $router->group(['middleware' => 'verified'], function () use ($router) {
 /**
  * API JWT secured routes group
  */
+// prefix = url. //middleware: toutes les routes du gruop passent par les middleware indiqués.
+
+// integre toute les routes dessous
 $router->group(['prefix' => 'api/secure', 'middleware' => 'jwt.auth', 'jwt.refresh'], function() use ($router){
-      $router->post('/email/request-verification', ['as' => 'email.request.verification', 'uses' => 'AuthController@emailRequestVerification']);
+    // Envoi email de verification. Le lien comprend un token jwt (pour cette raison que intégré dans le jwt)
+    $router->post('/email/request-verification', ['as' => 'email.request.verification', 'uses' => 'AuthController@emailRequestVerification']);
 
     //verified email address routes
     $router->group(['middleware' => 'verified'], function() use ($router){
       /**
        * API secure users related routes
        */
+      // est à l'intérieur du email router group precedent. CEs routes demandent à ce que l'email soit verifié
       $router->group(['prefix' => '/users'], function () use ($router) {
           $router->post('/logout', 'AuthController@logout');
           $router->put('/{id}', 'UsersController@updateUser');
@@ -75,7 +80,7 @@ $router->group(['prefix' => 'api/secure', 'middleware' => 'jwt.auth', 'jwt.refre
 });
 
 
-
+// plus utilisé c'était à la base pour le reset V2
 $router->group(['middleware' => 'auth'], function () use ($router) {
     //$router->post('/password/reset-request', 'RequestPasswordController@sendResetLinkEmail');
 });

@@ -25,6 +25,7 @@ class Favorites extends Model
 
     public function users() {
         return $this->belongsToMany(Users::class, 'id');
+
     }
 
     public function developers() {

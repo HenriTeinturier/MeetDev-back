@@ -24,6 +24,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        // except les pages publics
         $this->middleware('auth:api', ['except' => ['register', 'registerDev', 'registerRecrut', 'login', 'refresh', 'logout']]);
     }
 
@@ -41,10 +42,12 @@ class AuthController extends Controller
         $isDev = false;
         $isRecruiter = false;
 
+        // verfifie si token sinon envoi vers 401
         if (! $token = auth()->attempt($credentials)) {
         return response()->json(['error' => 'Unauthorized', 'credentials' => $credentials], 401);
         }
 
+        //
         if(!empty($user->dev_id)) {
             $isDev = true;
 
@@ -227,6 +230,7 @@ class AuthController extends Controller
     * @param  Request  $request
     * @return Response
     */
+    //envoi les mails
     public function emailRequestVerification(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
@@ -239,6 +243,7 @@ class AuthController extends Controller
     * @param  Request  $request
     * @return Response
     */
+    // verifie si email est verifié
     public function emailVerify(Request $request)
     {
         $this->validate($request, [
