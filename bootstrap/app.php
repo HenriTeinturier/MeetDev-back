@@ -126,6 +126,10 @@ $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Illuminate\Notifications\NotificationServiceProvider::class);
 $app->alias('Notification', Illuminate\Support\Facades\Notification::class);
 
+//Mailjet
+$app->register(Mailjet\LaravelMailjet\MailjetServiceProvider::class);
+//$app->register(Mailjet\LaravelMailjet\MailjetMailServiceProvider::class);
+$app->alias('Mailjet', Mailjet\LaravelMailjet\Facades\Mailjet::class);
 
 /*
 |--------------------------------------------------------------------------
